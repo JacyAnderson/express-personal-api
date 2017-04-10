@@ -12,7 +12,7 @@ app.use(bodyParser.json());
  * DATABASE *
  ************/
 
-// var db = require('./models');
+var db = require('./models');
 
 /**********
  * ROUTES *
@@ -38,16 +38,42 @@ app.get('/', function homepage(req, res) {
 app.get('/api', function api_index(req, res) {
   // TODO: Document all your api endpoints below
   res.json({
-    woops_i_has_forgot_to_document_all_my_endpoints: true, // CHANGE ME ;)
-    message: "Welcome to my personal api! Here's what you need to know!",
-    documentation_url: "https://github.com/example-username/express_self_api/README.md", // CHANGE ME
-    base_url: "http://YOUR-APP-NAME.herokuapp.com", // CHANGE ME
+    woops_i_has_forgot_to_document_all_my_endpoints: false,
+    message: "Welcome to Jacy's personal api! Here's what you need to know!",
+    documentation_url: "https://github.com/JacyAnderson/express-personal-api/blob/master/README.md", 
+    base_url: "https://tranquil-beach-76796.herokuapp.com/", 
     endpoints: [
-      {method: "GET", path: "/api", description: "Describes all available endpoints"},
-      {method: "GET", path: "/api/profile", description: "Data about me"}, // CHANGE ME
-      {method: "POST", path: "/api/campsites", description: "E.g. Create a new campsite"} // CHANGE ME
+      {method: "GET", path: "/api", description: "Describes all available endpoints on Jacy's personal api"},
+      {method: "GET", path: "/api/profile", description: "Check for my name, github_link/profile_image, current city, and"}, // CHANGE ME
+      {method: "POST", path: "/api/hikes", description: "E.g. Create a new hike by inputting name, location, website_url, and "} 
     ]
   })
+});
+
+////////////////////
+//  ROUTES
+///////////////////
+
+// define a root route: localhost:3000/
+app.get('/', function (req, res) {
+  res.sendFile('views/index.html' , { root : __dirname});
+});
+
+// get all profile information 
+app.get('/api/profile', function (req, res) {
+  console.log("You are at Jacy's profile!");
+  res.json("Jacy's profile information will go here.");
+});
+
+// get all hikes
+app.get('/api/hikes', function (req, res) {
+  // send all hikes as JSON response
+  console.log('You are on the hikes pages');
+  db.Hike.find()
+    .exec(function(err, hikes) {
+      if (err) { return console.log("index error: " + err); }
+      res.json(hikes);
+  });
 });
 
 /**********
