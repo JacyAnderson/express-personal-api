@@ -44,7 +44,8 @@ app.get('/api', function api_index(req, res) {
     base_url: "https://tranquil-beach-76796.herokuapp.com/", 
     endpoints: [
       {method: "GET", path: "/api", description: "Describes all available endpoints on Jacy's personal api"},
-      {method: "GET", path: "/api/profile", description: "Check for my name, github_link/profile_image, current city, and"}, // CHANGE ME
+      {method: "GET", path: "/api/profile", description: "Check for my name, github_link/profile_image, current city, and"}, 
+      {method: "GET", path: "/api/hikes", description: "Get all hikes information"},
       {method: "POST", path: "/api/hikes", description: "E.g. Create a new hike by inputting name, location, website_url, and "} 
     ]
   })
@@ -73,6 +74,28 @@ app.get('/api/hikes', function (req, res) {
     .exec(function(err, hikes) {
       if (err) { return console.log("index error: " + err); }
       res.json(hikes);
+  });
+});
+
+// create new hike
+app.post('/api/hikes', function (req, res) {
+
+  // create new hike with data from req.body
+  var newHike = new db.Hike({
+    name: req.body.name,
+    location: req.body.location,
+    website_url: req.body.website_url,
+    hike_complete: req.body.hike_complete
+  });
+
+  // save new hike to database
+  newHike.save(function(err, hike) {
+    if (err) {
+      return console.log("save error: " + err);
+    }
+    console.log("saved ", hike.title);
+    // send back hike to user
+    res.json(hike);
   });
 });
 
