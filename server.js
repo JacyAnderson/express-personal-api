@@ -58,7 +58,8 @@ app.get('/api', function api_index(req, res) {
       {method: "GET", path: "/api", type: "array", description: "Describes all available endpoints on Jacy's personal api"},
       {method: "GET", path: "/api/profile", type: "array", description: "Check for my name, github_link/profile_image, current city, and favorite_games"}, 
       {method: "GET", path: "/api/hikes", type: "array", description: "Get all hikes information"},
-      {method: "POST", path: "/api/hikes", type: "array", description: "E.g. Create a new hike by inputing name, location, website_url, and a boolean: hike_complete "} 
+      {method: "POST", path: "/api/hikes", type: "array", description: "E.g. Create a new hike by inputing name, location, website_url, and a boolean: hike_complete "}, 
+      {method: "Delete", path: "/api/hikes/:id", type: "array", description: "Get all hikes information"}
     ]
   })
 });
@@ -111,6 +112,31 @@ app.post('/api/hikes', function (req, res) {
   });
 });
 
+
+// UPDATE
+app.put('/api/hikes/:id', function (req, res) {
+  var id = req.params.id;
+  console.log(req.params.id);
+
+  db.Hike.findOne({_id: id}, function(err, hike) {
+    if(err) res.json({message: 'Could not find hike because: ' + err});
+
+    if(req.body.name) hike.name = req.body.name;
+    console.log(hike.name);
+    if(req.body.location) hike.location = req.body.location;
+    console.log(hike.location);
+    if(req.body.website_url) hike.website_url = req.body.website_url;
+    console.log(hike.website_url);
+    if(req.body.hike_complete) hike.hike_complete = req.body.hike_complete;
+    console.log(hike.hike_complete);
+
+    hike.save();
+    res.json(hike);
+   
+  });
+});
+
+// delete hike from database
 app.delete('/api/hikes/:id', function(req, res) {
   var hikeId = req.params.id;
   db.Hike.findOneAndRemove({ _id: hikeId }, function (err, deletedHike) {
