@@ -22,6 +22,18 @@ var db = require('./models');
 // i.e. `/images`, `/scripts`, `/styles`
 app.use(express.static('public'));
 
+// hard coded array for profile
+var jacyProfile = [
+  { name: "Jacy James Anderson",
+    github_link: "https://github.com/JacyAnderson",
+    github_profile_image: "https://avatars0.githubusercontent.com/u/26239487?v=3&s=460",
+    current_city: "Denver",
+    favorite_games: [{name: "Fallout 4", developer: "Bethesda"}, {name: "Skyrim", developer: "Bethesda"}, {name: "Civilization VI", developer: "Firaxis"}, {name: "Elder Scrolls Online", developer: "Bethesda"}, {name: "Elder Scrolls Legends", developer: "Dire Wolf Digital"}, {name: "Red Dead Redemption", developer: "Rockstar"}, {name: "Rocket League", developer: "Psyonix"}]
+  }
+]
+
+
+
 /*
  * HTML Endpoints
  */
@@ -44,7 +56,7 @@ app.get('/api', function api_index(req, res) {
     base_url: "https://tranquil-beach-76796.herokuapp.com/", 
     endpoints: [
       {method: "GET", path: "/api", description: "Describes all available endpoints on Jacy's personal api"},
-      {method: "GET", path: "/api/profile", description: "Check for my name, github_link/profile_image, current city, and"}, 
+      {method: "GET", path: "/api/profile", description: "Check for my name, github_link/profile_image, current city, and favorite_games"}, 
       {method: "GET", path: "/api/hikes", description: "Get all hikes information"},
       {method: "POST", path: "/api/hikes", description: "E.g. Create a new hike by inputting name, location, website_url, and "} 
     ]
@@ -63,7 +75,7 @@ app.get('/', function (req, res) {
 // get all profile information 
 app.get('/api/profile', function (req, res) {
   console.log("You are at Jacy's profile!");
-  res.json("Jacy's profile information will go here.");
+  res.json(jacyProfile);
 });
 
 // get all hikes
