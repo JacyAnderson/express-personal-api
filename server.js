@@ -55,10 +55,10 @@ app.get('/api', function api_index(req, res) {
     documentation_url: "https://github.com/JacyAnderson/express-personal-api/blob/master/README.md", 
     base_url: "https://tranquil-beach-76796.herokuapp.com/", 
     endpoints: [
-      {method: "GET", path: "/api", description: "Describes all available endpoints on Jacy's personal api"},
-      {method: "GET", path: "/api/profile", description: "Check for my name, github_link/profile_image, current city, and favorite_games"}, 
-      {method: "GET", path: "/api/hikes", description: "Get all hikes information"},
-      {method: "POST", path: "/api/hikes", description: "E.g. Create a new hike by inputting name, location, website_url, and "} 
+      {method: "GET", path: "/api", type: "array", description: "Describes all available endpoints on Jacy's personal api"},
+      {method: "GET", path: "/api/profile", type: "array", description: "Check for my name, github_link/profile_image, current city, and favorite_games"}, 
+      {method: "GET", path: "/api/hikes", type: "array", description: "Get all hikes information"},
+      {method: "POST", path: "/api/hikes", type: "array", description: "E.g. Create a new hike by inputing name, location, website_url, and a boolean: hike_complete "} 
     ]
   })
 });
