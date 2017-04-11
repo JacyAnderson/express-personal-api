@@ -111,6 +111,13 @@ app.post('/api/hikes', function (req, res) {
   });
 });
 
+app.delete('/api/hikes/:id', function(req, res) {
+  var hikeId = req.params.id;
+  db.Hike.findOneAndRemove({ _id: hikeId }, function (err, deletedHike) {
+    res.json(deletedHike);
+  });
+});
+
 /**********
  * SERVER *
  **********/
