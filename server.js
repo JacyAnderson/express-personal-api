@@ -135,7 +135,7 @@ app.put('/api/hikes/:id', function (req, res) {
    
   });
 });
-
+ 
 // delete hike from database
 app.delete('/api/hikes/:id', function(req, res) {
   var hikeId = req.params.id;
