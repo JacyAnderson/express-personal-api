@@ -90,6 +90,21 @@ app.get('/api/hikes', function (req, res) {
   });
 });
 
+// get one hike
+app.get('/api/hikes/:id', function (req, res) {
+  var id = req.params.id;
+  console.log(req.params.id);
+ db.Hike.findOne({_id: id}, function(err, hike) {
+  if(err) {
+    console.log(err);
+  } else {
+    res.json(hike); 
+  }
+  });
+});
+
+
+
 // create new hike
 app.post('/api/hikes', function (req, res) {
 
